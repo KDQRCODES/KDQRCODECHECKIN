@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Leitor de QR Code</title>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+  <h2>Escanear QR Code</h2>
+  <div id="reader" style="width:300px;"></div>
+  <div id="resultado"></div>
+
+  <script>
+    function registrarEntrada(nome) {
+      const resultado = document.getElementById('resultado');
+      const agora = new Date().toLocaleString();
+      resultado.innerHTML = `<p>${nome} entrou em ${agora}</p>`;
+      // Aqui entraria o envio para o Firebase (futuramente)
+    }
+
+    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+      registrarEntrada(decodedText);
+      html5QrcodeScanner.clear();
+    };
+
+    const html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(qrCodeSuccessCallback);
+  </script>
+</body>
+</html>
