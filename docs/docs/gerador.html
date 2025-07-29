@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de QR Codes</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+</head>
+<body>
+  <h2>Gerar QR Codes</h2>
+  <textarea id="nomes" rows="10" cols="30" placeholder="Digite um nome por linha"></textarea><br>
+  <button onclick="gerar()">Gerar</button>
+  <div id="qrs"></div>
+
+  <script>
+    function gerar() {
+      const nomes = document.getElementById('nomes').value.split('\n');
+      const qrsDiv = document.getElementById('qrs');
+      qrsDiv.innerHTML = '';
+      nomes.forEach(nome => {
+        const canvas = document.createElement('canvas');
+        const qr = new QRious({
+          element: canvas,
+          value: nome,
+          size: 150
+        });
+        qrsDiv.appendChild(document.createTextNode(nome));
+        qrsDiv.appendChild(canvas);
+        qrsDiv.appendChild(document.createElement('br'));
+      });
+    }
+  </script>
+</body>
+</html>
